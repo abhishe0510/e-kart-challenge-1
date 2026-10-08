@@ -43,3 +43,63 @@ h1 {
         grid-template-columns: 1fr;
     }
 }
+
+.price-finder {
+    max-width: 700px;
+    margin: 0 auto 40px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.price-finder h2 {
+    margin-top: 0;
+}
+
+.price-search {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+#target-price {
+    width: 300px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+#search-button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+
+    #product-container {
+        grid-template-columns: 1fr;
+    }
+
+    .price-search {
+        flex-direction: column;
+    }
+
+    #target-price {
+        width: auto;
+    }
+
+}
+
+#search-result {
+    margin-bottom: 40px;
+}
+
+#search-result .product-card {
+    max-width: 400px;
+}

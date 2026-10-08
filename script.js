@@ -37,3 +37,59 @@ for (const product of allProducts) {
     container.innerHTML += createProductCard(product);
 
 }
+
+function findClosestProduct(targetPrice) {
+
+    let closestProduct = null;
+    let smallestDifference = Infinity;
+
+    for (const product of allProducts) {
+
+        const difference = Math.abs(product.price - targetPrice);
+
+        if (difference < smallestDifference) {
+
+            smallestDifference = difference;
+            closestProduct = product;
+
+        }
+    }
+
+    return closestProduct;
+}
+
+
+const priceInput = document.getElementById("target-price");
+const searchButton = document.getElementById("search-button");
+const priceMessage = document.getElementById("price-message");
+
+searchButton.addEventListener("click", function () {
+
+    const targetPrice = Number(priceInput.value);
+
+    // Empty input
+    if (!priceInput.value) {
+        priceMessage.textContent = "⚠ Please enter a target price.";
+        return;
+
+    }
+
+    // Zero or negative value
+    if (targetPrice <= 0) {
+        priceMessage.textContent = "⚠ Please enter a valid positive price.";
+        return;
+
+    }
+
+    priceMessage.textContent = "";
+
+    const closestProduct = findClosestProduct(targetPrice);
+
+    console.log("Target price:", targetPrice);
+    console.log("Closest product:", closestProduct);
+
+    const searchResult = document.getElementById("search-result");
+
+    searchResult.innerHTML = createProductCard(closestProduct);
+
+});
