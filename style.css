@@ -103,3 +103,43 @@ h1 {
 #search-result .product-card {
     max-width: 400px;
 }
+
+
+
+
+#search-result {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+#search-result .product-card {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.view-product-button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.view-product-button:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+    #search-result {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    #search-result {
+        grid-template-columns: 1fr;
+    }
+}

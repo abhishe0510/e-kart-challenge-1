@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,54 +7,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Product Explorer</title>
-    <link rel="stylesheet" href="./style.css"
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
     <h1>Product Explorer</h1>
 
-    
     <section class="price-finder">
-
         <h2>Smart Price Finder</h2>
-
         <p>Find products around</p>
 
         <div class="price-search">
-
             <input
                 type="number"
                 id="target-price"
                 placeholder="Enter target price"
+                min="1"
             >
 
-            <button id="search-button">
+            <button id="search-button" type="button">
                 Search
             </button>
-
         </div>
 
         <p id="price-message"></p>
     </section>
 
     <section>
-
-        <h2>Closest Product</h2>
-
+        <h2>Closest Products</h2>
         <div id="search-result"></div>
-
     </section>
-
 
     <section>
-
         <h2>Products</h2>
-
         <div id="product-container"></div>
-
     </section>
-
 
     <script src="./data.js"></script>
     <script src="./script.js"></script>
@@ -61,3 +50,4 @@
 </body>
 
 </html>
+```

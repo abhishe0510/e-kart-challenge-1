@@ -1,95 +1,147 @@
+
 const allProducts = [];
 
+// Step 1: Extract all products from the nested dataset
 for (const category of storeData.categories) {
-
     for (const subcategory of category.subcategories) {
-
         for (const product of subcategory.products) {
-
             allProducts.push(product);
-
         }
-
     }
-
 }
 
 console.log("Total products:", allProducts.length);
-console.log("All products:", allProducts);
 
 
-function createProductCard(product) {
+// Step 2: Create a reusable product card
+function createProductCard(product, targetPrice = null) {
+    const priceDifference = targetPrice === null
+        ? null
+        : Math.abs(product.price - targetPrice);
 
     return `
         <div class="product-card">
             <h2>${product.name}</h2>
+
             <p>Brand: ${product.brand}</p>
-            <p>Price: ₹${product.price}</p>
+
+            <p>Price: ₹${product.price.toLocaleString("en-IN")}</p>
+
             <p>Rating: ⭐ ${product.rating}</p>
+
+            <p>Reviews: ${product.reviews}</p>
+
+            ${
+                priceDifference !== null
+                    ? `<p>Difference: ₹${priceDifference.toLocaleString("en-IN")}</p>`
+                    : ""
+            }
+
+            <button
+                class="view-product-button"
+                data-product-id="${product.id}">
+                View Product
+            </button>
         </div>
     `;
 }
 
-const container = document.getElementById("product-container");
 
-for (const product of allProducts) {
+// Step 3: Display all products initially
+const productContainer = document.getElementById("product-container");
 
-    container.innerHTML += createProductCard(product);
-
+function displayAllProducts() {
+    productContainer.innerHTML = allProducts
+        .map(product => createProductCard(product))
+        .join("");
 }
 
-function findClosestProduct(targetPrice) {
+displayAllProducts();
 
-    let closestProduct = null;
-    let smallestDifference = Infinity;
+
+// Step 4: Find the top 3 closest products using linear search
+function findClosestProducts(targetPrice) {
+    const productsWithDifference = [];
 
     for (const product of allProducts) {
-
         const difference = Math.abs(product.price - targetPrice);
 
-        if (difference < smallestDifference) {
-
-            smallestDifference = difference;
-            closestProduct = product;
-
-        }
+        productsWithDifference.push({
+            product: product,
+            difference: difference
+        });
     }
 
-    return closestProduct;
+    // Sort products by their price difference
+    productsWithDifference.sort((a, b) => {
+        return a.difference - b.difference;
+    });
+
+    // Return at most 3 closest products
+    return productsWithDifference.slice(0, 3);
 }
 
 
+// Step 5: Connect the Price Finder UI
 const priceInput = document.getElementById("target-price");
 const searchButton = document.getElementById("search-button");
 const priceMessage = document.getElementById("price-message");
+const searchResult = document.getElementById("search-result");
 
 searchButton.addEventListener("click", function () {
+    const inputValue = priceInput.value.trim();
 
-    const targetPrice = Number(priceInput.value);
-
-    // Empty input
-    if (!priceInput.value) {
-        priceMessage.textContent = "⚠ Please enter a target price.";
+    // Validate empty input
+    if (inputValue === "") {
+        priceMessage.textContent = "Please enter a target price.";
+        searchResult.innerHTML = "";
         return;
-
     }
 
-    // Zero or negative value
-    if (targetPrice <= 0) {
-        priceMessage.textContent = "⚠ Please enter a valid positive price.";
-        return;
+    const targetPrice = Number(inputValue);
 
+    // Validate invalid or non-positive prices
+    if (!Number.isFinite(targetPrice) || targetPrice <= 0) {
+        priceMessage.textContent =
+            "Please enter a valid positive price.";
+        searchResult.innerHTML = "";
+        return;
     }
 
+    // Clear previous validation message
     priceMessage.textContent = "";
 
-    const closestProduct = findClosestProduct(targetPrice);
+    // Find the closest products
+    const closestProducts = findClosestProducts(targetPrice);
+
+    // Display the results
+    searchResult.innerHTML = closestProducts
+        .map(item => createProductCard(item.product, targetPrice))
+        .join("");
 
     console.log("Target price:", targetPrice);
-    console.log("Closest product:", closestProduct);
+    console.log("Closest products:", closestProducts);
+});
 
-    const searchResult = document.getElementById("search-result");
 
-    searchResult.innerHTML = createProductCard(closestProduct);
+// Step 6: Handle View Product button clicks
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("view-product-button")) {
+        const productId = event.target.dataset.productId;
 
+        const selectedProduct = allProducts.find(product => {
+            return product.id === productId;
+        });
+
+        if (selectedProduct) {
+            alert(
+                selectedProduct.name +
+                "\nBrand: " + selectedProduct.brand +
+                "\nPrice: ₹" +
+                selectedProduct.price.toLocaleString("en-IN") +
+                "\nRating: " + selectedProduct.rating +
+                "\nStock: " + selectedProduct.stock
+            );
+        }
+    }
 });
