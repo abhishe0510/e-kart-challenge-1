@@ -33,6 +33,37 @@
         <p id="price-message"></p>
     </section>
 
+    <section class="range-filter">
+        <h2>Filter by Price Range</h2>
+
+        <div class="price-search">
+            <input
+                type="number"
+                id="min-price"
+                placeholder="Minimum price"
+                min="0"
+            >
+
+            <input
+                type="number"
+                id="max-price"
+                placeholder="Maximum price"
+                min="0"
+            >
+
+            <button id="filter-button" type="button">
+                Filter Products
+            </button>
+
+            <button id="reset-button" type="button">
+                Show All Products
+            </button>
+        </div>
+
+        <p id="filter-message"></p>
+        <div id="filter-result"></div>
+    </section>
+
     <section>
         <h2>Closest Products</h2>
         <div id="search-result"></div>

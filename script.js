@@ -145,3 +145,68 @@ document.addEventListener("click", function (event) {
         }
     }
 });
+
+
+
+const minPriceInput = document.getElementById("min-price");
+const maxPriceInput = document.getElementById("max-price");
+const filterButton = document.getElementById("filter-button");
+const resetButton = document.getElementById("reset-button");
+const filterMessage = document.getElementById("filter-message");
+const filterResult = document.getElementById("filter-result");
+
+// Filter products by price range
+filterButton.addEventListener("click", function () {
+    const minValue = minPriceInput.value.trim();
+    const maxValue = maxPriceInput.value.trim();
+
+    if (minValue === "" || maxValue === "") {
+        filterMessage.textContent = "Please enter both prices.";
+        filterResult.innerHTML = "";
+        return;
+    }
+
+    const minPrice = Number(minValue);
+    const maxPrice = Number(maxValue);
+
+    if (
+        !Number.isFinite(minPrice) ||
+        !Number.isFinite(maxPrice) ||
+        minPrice < 0 ||
+        maxPrice < 0 ||
+        minPrice > maxPrice
+    ) {
+        filterMessage.textContent = "Please enter a valid price range.";
+        filterResult.innerHTML = "";
+        return;
+    }
+
+    const filteredProducts = allProducts.filter(function (product) {
+        return product.price >= minPrice &&
+               product.price <= maxPrice;
+    });
+
+    if (filteredProducts.length === 0) {
+        filterMessage.textContent =
+            "No products found in this price range.";
+        filterResult.innerHTML = "";
+        return;
+    }
+
+    filterMessage.textContent =
+        filteredProducts.length + " products found.";
+
+    filterResult.innerHTML = filteredProducts
+        .map(function (product) {
+            return createProductCard(product);
+        })
+        .join("");
+});
+
+// Reset the price filter
+resetButton.addEventListener("click", function () {
+    minPriceInput.value = "";
+    maxPriceInput.value = "";
+    filterMessage.textContent = "";
+    filterResult.innerHTML = "";
+});
