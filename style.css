@@ -186,3 +186,24 @@ h1 {
         grid-template-columns: 1fr;
     }
 }
+
+
+.sort-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0 20px;
+}
+
+.sort-container select {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.sort-container label {
+    font-weight: 600;
+}

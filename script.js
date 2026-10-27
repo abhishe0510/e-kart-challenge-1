@@ -50,13 +50,35 @@ function createProductCard(product, targetPrice = null) {
 // Step 3: Display all products initially
 const productContainer = document.getElementById("product-container");
 
-function displayAllProducts() {
-    productContainer.innerHTML = allProducts
+
+const sortSelect = document.getElementById("sort-products");
+
+function displayAllProducts(products = allProducts) {
+    productContainer.innerHTML = products
         .map(product => createProductCard(product))
         .join("");
 }
 
+sortSelect.addEventListener("change", function () {
+    const sortedProducts = [...allProducts];
+
+    if (sortSelect.value === "price-low") {
+        sortedProducts.sort((a, b) => a.price - b.price);
+    } else if (sortSelect.value === "price-high") {
+        sortedProducts.sort((a, b) => b.price - a.price);
+    } else if (sortSelect.value === "rating") {
+        sortedProducts.sort((a, b) => b.rating - a.rating);
+    } else if (sortSelect.value === "name") {
+        sortedProducts.sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
+    }
+
+    displayAllProducts(sortedProducts);
+});
+
 displayAllProducts();
+
 
 
 // Step 4: Find the top 3 closest products using linear search
