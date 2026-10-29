@@ -22,13 +22,9 @@ function createProductCard(product, targetPrice = null) {
     return `
         <div class="product-card">
             <h2>${product.name}</h2>
-
             <p>Brand: ${product.brand}</p>
-
             <p>Price: ₹${product.price.toLocaleString("en-IN")}</p>
-
             <p>Rating: ⭐ ${product.rating}</p>
-
             <p>Reviews: ${product.reviews}</p>
 
             ${
@@ -47,41 +43,87 @@ function createProductCard(product, targetPrice = null) {
 }
 
 
-// Step 3: Display all products initially
+// Step 3: Product search, category filtering and sorting
 const productContainer = document.getElementById("product-container");
-
-
 const sortSelect = document.getElementById("sort-products");
+const categoryFilter = document.getElementById("category-filter");
+const productSearch = document.getElementById("product-search");
+const clearSearchButton = document.getElementById("clear-search");
+const productCount = document.getElementById("product-count");
 
+// Populate category dropdown
+for (const category of storeData.categories) {
+    const option = document.createElement("option");
+
+    option.value = category.name;
+    option.textContent = category.name;
+
+    categoryFilter.appendChild(option);
+}
+
+// Display products
 function displayAllProducts(products = allProducts) {
     productContainer.innerHTML = products
         .map(product => createProductCard(product))
         .join("");
 }
 
-sortSelect.addEventListener("change", function () {
-    const sortedProducts = [...allProducts];
+// Search, filter and sort products together
+function updateProducts() {
+    let displayedProducts = [...allProducts];
 
+    // Search by product name or brand
+    const searchText = productSearch.value.trim().toLowerCase();
+
+    if (searchText !== "") {
+        displayedProducts = displayedProducts.filter(function (product) {
+            return product.name.toLowerCase().includes(searchText) ||
+                   product.brand.toLowerCase().includes(searchText);
+        });
+    }
+
+    // Filter by category
+    if (categoryFilter.value !== "all") {
+        displayedProducts = displayedProducts.filter(function (product) {
+            return product.category === categoryFilter.value;
+        });
+    }
+
+    // Sort the matching products
     if (sortSelect.value === "price-low") {
-        sortedProducts.sort((a, b) => a.price - b.price);
+        displayedProducts.sort((a, b) => a.price - b.price);
     } else if (sortSelect.value === "price-high") {
-        sortedProducts.sort((a, b) => b.price - a.price);
+        displayedProducts.sort((a, b) => b.price - a.price);
     } else if (sortSelect.value === "rating") {
-        sortedProducts.sort((a, b) => b.rating - a.rating);
+        displayedProducts.sort((a, b) => b.rating - a.rating);
     } else if (sortSelect.value === "name") {
-        sortedProducts.sort((a, b) =>
+        displayedProducts.sort((a, b) =>
             a.name.localeCompare(b.name)
         );
     }
 
-    displayAllProducts(sortedProducts);
+    // Display results and count
+    displayAllProducts(displayedProducts);
+
+    productCount.textContent =
+        displayedProducts.length + " product(s) found.";
+}
+
+// Update whenever search, category or sorting changes
+productSearch.addEventListener("input", updateProducts);
+categoryFilter.addEventListener("change", updateProducts);
+sortSelect.addEventListener("change", updateProducts);
+
+// Clear search without resetting category or sorting
+clearSearchButton.addEventListener("click", function () {
+    productSearch.value = "";
+    updateProducts();
 });
 
-displayAllProducts();
+updateProducts();
 
 
-
-// Step 4: Find the top 3 closest products using linear search
+// Step 4: Find the top 3 closest products
 function findClosestProducts(targetPrice) {
     const productsWithDifference = [];
 
@@ -94,17 +136,13 @@ function findClosestProducts(targetPrice) {
         });
     }
 
-    // Sort products by their price difference
-    productsWithDifference.sort((a, b) => {
-        return a.difference - b.difference;
-    });
+    productsWithDifference.sort((a, b) => a.difference - b.difference);
 
-    // Return at most 3 closest products
     return productsWithDifference.slice(0, 3);
 }
 
 
-// Step 5: Connect the Price Finder UI
+// Step 5: Smart Price Finder
 const priceInput = document.getElementById("target-price");
 const searchButton = document.getElementById("search-button");
 const priceMessage = document.getElementById("price-message");
@@ -113,7 +151,6 @@ const searchResult = document.getElementById("search-result");
 searchButton.addEventListener("click", function () {
     const inputValue = priceInput.value.trim();
 
-    // Validate empty input
     if (inputValue === "") {
         priceMessage.textContent = "Please enter a target price.";
         searchResult.innerHTML = "";
@@ -122,36 +159,28 @@ searchButton.addEventListener("click", function () {
 
     const targetPrice = Number(inputValue);
 
-    // Validate invalid or non-positive prices
     if (!Number.isFinite(targetPrice) || targetPrice <= 0) {
-        priceMessage.textContent =
-            "Please enter a valid positive price.";
+        priceMessage.textContent = "Please enter a valid positive price.";
         searchResult.innerHTML = "";
         return;
     }
 
-    // Clear previous validation message
     priceMessage.textContent = "";
 
-    // Find the closest products
     const closestProducts = findClosestProducts(targetPrice);
 
-    // Display the results
     searchResult.innerHTML = closestProducts
         .map(item => createProductCard(item.product, targetPrice))
         .join("");
-
-    console.log("Target price:", targetPrice);
-    console.log("Closest products:", closestProducts);
 });
 
 
-// Step 6: Handle View Product button clicks
+// Step 6: View Product button
 document.addEventListener("click", function (event) {
     if (event.target.classList.contains("view-product-button")) {
         const productId = event.target.dataset.productId;
 
-        const selectedProduct = allProducts.find(product => {
+        const selectedProduct = allProducts.find(function (product) {
             return product.id === productId;
         });
 
@@ -169,7 +198,7 @@ document.addEventListener("click", function (event) {
 });
 
 
-
+// Step 7: Filter products by price range
 const minPriceInput = document.getElementById("min-price");
 const maxPriceInput = document.getElementById("max-price");
 const filterButton = document.getElementById("filter-button");
@@ -177,7 +206,6 @@ const resetButton = document.getElementById("reset-button");
 const filterMessage = document.getElementById("filter-message");
 const filterResult = document.getElementById("filter-result");
 
-// Filter products by price range
 filterButton.addEventListener("click", function () {
     const minValue = minPriceInput.value.trim();
     const maxValue = maxPriceInput.value.trim();
@@ -219,13 +247,11 @@ filterButton.addEventListener("click", function () {
         filteredProducts.length + " products found.";
 
     filterResult.innerHTML = filteredProducts
-        .map(function (product) {
-            return createProductCard(product);
-        })
+        .map(product => createProductCard(product))
         .join("");
 });
 
-// Reset the price filter
+// Reset price range results
 resetButton.addEventListener("click", function () {
     minPriceInput.value = "";
     maxPriceInput.value = "";
