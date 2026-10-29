@@ -238,36 +238,3 @@ h1 {
     background-color: white;
     cursor: pointer;
 }
-
-/* Product Search Bar */
-.product-search {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 15px 0;
-}
-
-.product-search input {
-    flex: 1;
-    min-width: 220px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
-
-.product-search button {
-    padding: 10px 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.product-search button:hover {
-    opacity: 0.8;
-}
-
-/* Product Count */
-#product-count {
-    margin: 10px 0;
-    color: #555;
-}
