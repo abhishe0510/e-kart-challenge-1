@@ -272,3 +272,40 @@ h1 {
     margin: 10px 0;
     color: #555;
 }
+
+/* Smart Price Finder */
+.price-finder {
+    background-color: #EAF3FF;
+    border: 1px solid #D5E5FA;
+    border-radius: 14px;
+    padding: 30px;
+}
+
+/* Product Search Section */
+.product-search {
+    background-color: #EAF3FF;
+    border: 1px solid #D5E5FA;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+/* Search Input */
+.product-search input {
+    background-color: #FFFFFF;
+    border: 1px solid #C5D8F0;
+}
+
+/* Search Button */
+.product-search button {
+    background-color: #D5E5FA;
+    color: #1E3A5F;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+.product-search button:hover {
+    background-color: #C2D9F5;
+}
