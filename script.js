@@ -14,18 +14,40 @@ console.log("Total products:", allProducts.length);
 
 
 // Step 2: Create a reusable product card
+
 function createProductCard(product, targetPrice = null) {
     const priceDifference = targetPrice === null
         ? null
         : Math.abs(product.price - targetPrice);
 
+    // Determine stock availability
+    let stockStatus = "";
+
+    if (product.stock === 0) {
+        stockStatus = "Out of Stock";
+    } else if (product.stock <= 5) {
+        stockStatus = "Low Stock";
+    } else {
+        stockStatus = "In Stock";
+    }
+
     return `
         <div class="product-card">
             <h2>${product.name}</h2>
+
             <p>Brand: ${product.brand}</p>
+
             <p>Price: ₹${product.price.toLocaleString("en-IN")}</p>
+
             <p>Rating: ⭐ ${product.rating}</p>
+
             <p>Reviews: ${product.reviews}</p>
+
+            <p class="stock-status ${stockStatus.toLowerCase().replaceAll(" ", "-")}">
+                ${stockStatus}
+            </p>
+
+            <p>Available Quantity: ${product.stock}</p>
 
             ${
                 priceDifference !== null
