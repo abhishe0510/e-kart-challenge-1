@@ -1,4 +1,3 @@
-
 const allProducts = [];
 
 // Step 1: Extract all products from the nested dataset
@@ -85,6 +84,16 @@ for (const category of storeData.categories) {
 
 // Display products
 function displayAllProducts(products = allProducts) {
+
+    if (products.length === 0) {
+        productContainer.innerHTML = `
+            <p class="no-products-message">
+                No products found matching your search.
+            </p>
+        `;
+        return;
+    }
+
     productContainer.innerHTML = products
         .map(product => createProductCard(product))
         .join("");
@@ -169,6 +178,8 @@ const priceInput = document.getElementById("target-price");
 const searchButton = document.getElementById("search-button");
 const priceMessage = document.getElementById("price-message");
 const searchResult = document.getElementById("search-result");
+const clearPriceSearchButton =
+    document.getElementById("clear-price-search");
 
 searchButton.addEventListener("click", function () {
     const inputValue = priceInput.value.trim();
@@ -194,6 +205,12 @@ searchButton.addEventListener("click", function () {
     searchResult.innerHTML = closestProducts
         .map(item => createProductCard(item.product, targetPrice))
         .join("");
+});
+
+clearPriceSearchButton.addEventListener("click", function () {
+    priceInput.value = "";
+    priceMessage.textContent = "";
+    searchResult.innerHTML = "";
 });
 
 

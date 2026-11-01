@@ -335,3 +335,9 @@ h1 {
     background-color: #fee2e2;
     color: #991b1b;
 }
+
+.no-products-message {
+    text-align: center;
+    font-size: 18px;
+    padding: 30px;
+}
