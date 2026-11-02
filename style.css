@@ -341,3 +341,22 @@ h1 {
     font-size: 18px;
     padding: 30px;
 }
+
+.product-list-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 25px 0 15px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.product-list-heading h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.product-list-heading span {
+    color: #777777;
+    font-size: 14px;
+}
