@@ -391,3 +391,18 @@ h1 {
     font-size: 16px;
     font-weight: 500;
 }
+
+.main-subtitle {
+    text-align: center;
+    color: #666;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+section h2 {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #cccccc;
+    letter-spacing: 0.5px;
+}
