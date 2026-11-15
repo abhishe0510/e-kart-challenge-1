@@ -406,3 +406,21 @@ section h2 {
     border-bottom: 2px solid #cccccc;
     letter-spacing: 0.5px;
 }
+
+.original-price {
+    text-decoration: line-through;
+    color: #777;
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+.discount-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 3px 8px;
+    background-color: #d1fae5;
+    color: #047857;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
