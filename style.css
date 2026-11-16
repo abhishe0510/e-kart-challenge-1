@@ -423,4 +423,49 @@ section h2 {
     border-radius: 12px;
     font-size: 12px;
     font-weight: bold;
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+}     
+
+.original-price {
+    text-decoration: line-through;
+    color: #777;
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+.discount-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 3px 8px;
+    background-color: #d1fae5;
+    color: #047857;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+/* Discounted product price */
+.product-card p .original-price {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 14px;
+    margin-left: 6px;
+}
+
+.product-card p .discount-badge {
+    background-color: #d1fae5;
+    color: #047857;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 6px;
+}
+
+.product-card p:has(.discount-badge) {
+    font-weight: bold;
+}
+
+.product-card p:has(.discount-badge) {
+    color: #047857;
+}

@@ -14,10 +14,20 @@ console.log("Total products:", allProducts.length);
 
 // Step 2: Create a reusable product card
 
+
 function createProductCard(product, targetPrice = null) {
     const priceDifference = targetPrice === null
         ? null
         : Math.abs(product.price - targetPrice);
+
+    // Calculate discount percentage
+    let discountPercentage = 0;
+
+    if (product.originalPrice > product.price) {
+        discountPercentage = Math.round(
+            ((product.originalPrice - product.price) / product.originalPrice) * 100
+        );
+    }
 
     // Determine stock availability
     let stockStatus = "";
@@ -36,10 +46,23 @@ function createProductCard(product, targetPrice = null) {
 
             <p>Brand: ${product.brand}</p>
 
-            <p>Price: ₹${product.price.toLocaleString("en-IN")}</p>
+            <p>
+                Price: ₹${product.price.toLocaleString("en-IN")}
+                ${
+                    discountPercentage > 0
+                    ? `
+                        <span class="original-price">
+                            ₹${product.originalPrice.toLocaleString("en-IN")}
+                        </span>
+                        <span class="discount-badge">
+                            ${discountPercentage}% OFF
+                        </span>
+                    `
+                    : ""
+                }
+            </p>
 
             <p>Rating: ⭐ ${product.rating}</p>
-
             <p>Reviews: ${product.reviews}</p>
 
             <p class="stock-status ${stockStatus.toLowerCase().replaceAll(" ", "-")}">
@@ -62,6 +85,7 @@ function createProductCard(product, targetPrice = null) {
         </div>
     `;
 }
+
 
 
 // Step 3: Product search, category filtering and sorting
