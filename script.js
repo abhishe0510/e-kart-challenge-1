@@ -155,6 +155,13 @@ function updateProducts() {
         displayedProducts.sort((a, b) =>
             a.name.localeCompare(b.name)
         );
+    } else if (sortSelect.value === "discount") {
+        displayedProducts.sort((a, b) => {
+            const discountA = ((a.originalPrice - a.price) / a.originalPrice) * 100;
+            const discountB = ((b.originalPrice - b.price) / b.originalPrice) * 100;
+
+            return discountB - discountA;
+        });
     }
 
     // Display results and count
