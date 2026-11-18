@@ -469,3 +469,30 @@ section h2 {
 .product-card p:has(.discount-badge) {
     color: #047857;
 }
+
+
+/* Align category, stock and sorting filters */
+.filter-sort-container {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin: 25px 0;
+}
+
+.category-container,
+.stock-filter-container,
+.sort-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-sort-container select {
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    font-size: 14px;
+    cursor: pointer;
+}

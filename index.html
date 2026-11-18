@@ -91,12 +91,26 @@
 
     <p id="product-count"></p>
 
+    
     <div class="filter-sort-container">
+
         <div class="category-container">
             <label for="category-filter">Category:</label>
 
             <select id="category-filter">
                 <option value="all">All Categories</option>
+            </select>
+        </div>
+
+        <!-- Stock Filter -->
+        <div class="stock-filter-container">
+            <label for="stock-filter">Stock:</label>
+
+            <select id="stock-filter">
+                <option value="all">All Stock</option>
+                <option value="in-stock">In Stock</option>
+                <option value="low-stock">Low Stock</option>
+                <option value="out-of-stock">Out of Stock</option>
             </select>
         </div>
 
@@ -112,7 +126,9 @@
                 <option value="discount">Discount: Highest First</option>
             </select>
         </div>
-    </div>      
+
+    </div>
+      
 
     <div id="product-container"></div>
     <div class="product-list-heading">

@@ -95,6 +95,7 @@ const categoryFilter = document.getElementById("category-filter");
 const productSearch = document.getElementById("product-search");
 const clearSearchButton = document.getElementById("clear-search");
 const productCount = document.getElementById("product-count");
+const stockFilter = document.getElementById("stock-filter");
 
 // Populate category dropdown
 for (const category of storeData.categories) {
@@ -124,6 +125,7 @@ function displayAllProducts(products = allProducts) {
 }
 
 // Search, filter and sort products together
+
 function updateProducts() {
     let displayedProducts = [...allProducts];
 
@@ -142,6 +144,21 @@ function updateProducts() {
         displayedProducts = displayedProducts.filter(function (product) {
             return product.category === categoryFilter.value;
         });
+    }
+
+    // Filter by stock availability
+    if (stockFilter.value === "in-stock") {
+        displayedProducts = displayedProducts.filter(
+            product => product.stock > 5
+        );
+    } else if (stockFilter.value === "low-stock") {
+        displayedProducts = displayedProducts.filter(
+            product => product.stock > 0 && product.stock <= 5
+        );
+    } else if (stockFilter.value === "out-of-stock") {
+        displayedProducts = displayedProducts.filter(
+            product => product.stock === 0
+        );
     }
 
     // Sort the matching products
@@ -171,10 +188,12 @@ function updateProducts() {
         displayedProducts.length + " product(s) found.";
 }
 
+
 // Update whenever search, category or sorting changes
 productSearch.addEventListener("input", updateProducts);
 categoryFilter.addEventListener("change", updateProducts);
 sortSelect.addEventListener("change", updateProducts);
+stockFilter.addEventListener("change", updateProducts);
 
 // Clear search without resetting category or sorting
 clearSearchButton.addEventListener("click", function () {
