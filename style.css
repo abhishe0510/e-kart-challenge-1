@@ -494,3 +494,15 @@ section h2 {
     font-size: 14px;
     cursor: pointer;
 }
+
+/* Highlight discounted price on hover */
+.product-card:hover .discount-badge {
+    background-color: #047857;
+    color: white;
+    transition: 0.3s ease;
+}
+
+/* Slightly highlight the current price */
+.product-card:hover p:has(.discount-badge) {
+    color: #047857;
+}
