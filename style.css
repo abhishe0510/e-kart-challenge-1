@@ -539,3 +539,18 @@ section h2 {
         width: 100%;
     }
 }
+
+/* Button Hover Effects */
+button {
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    background-color: #dbeafe;
+}
+
+/* Button Click Effect */
+button:active {
+    transform: translateY(0);
+}
